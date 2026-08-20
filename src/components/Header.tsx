@@ -12,11 +12,15 @@ export function Header() {
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
+
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
 
   const menuItems = [
     { label: "Sobre", href: "#sobre" },
@@ -37,11 +41,13 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <img 
-            src="/__l5e/assets-v1/81abcb1a-8658-45bf-a077-cffcd4393e39/expertise-full-logo.jpg" 
-            alt="Expertise Logo" 
-            className="h-12 w-auto object-contain rounded-sm"
+
+        {/* LOGO */}
+        <Link to="/" className="flex items-center">
+          <img
+            src="/expertise-logo.jpg"
+            alt="Expertise"
+            className="h-12 md:h-14 w-auto object-contain"
           />
         </Link>
 
@@ -54,7 +60,8 @@ export function Header() {
               className="text-sm font-medium hover:text-primary transition-colors relative group"
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:width-full" />
+
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </nav>
@@ -67,6 +74,7 @@ export function Header() {
           >
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
+
           <a
             href="#contato"
             className="bg-primary text-primary-foreground px-5 py-2 rounded-sm text-sm font-semibold hover:opacity-90 transition-opacity"
@@ -75,17 +83,20 @@ export function Header() {
           </a>
         </div>
 
-        {/* Mobile Toggle */}
+        {/* Mobile */}
         <div className="flex lg:hidden items-center gap-3">
           <button
             onClick={toggleTheme}
             className="p-2 rounded-full hover:bg-accent"
+            aria-label="Alternar tema"
           >
             {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
           </button>
+
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2"
+            aria-label="Abrir menu"
           >
             {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -112,6 +123,7 @@ export function Header() {
                   {item.label}
                 </a>
               ))}
+
               <a
                 href="#contato"
                 onClick={() => setMobileMenuOpen(false)}
